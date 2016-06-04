@@ -1,5 +1,10 @@
 ﻿/// <summary>
 /// Created by KirbyRawr(Jairo Baldán) in Monkimun Inc.
+/// This plugin integrates the subscribe to the list function of Mailchimp API into Unity3D.
+/// Copyright(c) 2015 Monkimun Inc.
+/// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+/// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 /// </summary>
 
 using UnityEngine;
@@ -8,23 +13,27 @@ using UnityEngine.UI;
 using MailChimp;
 
 namespace MailChimp.Demos {
-	public class SubscribeNews : MonoBehaviour {
+    public class SubscribeNews : MonoBehaviour {
+        [SerializeField]
+        MailchimpPlugin mailchimpPlugin;
+        [SerializeField]
+        InputField input;
+        [SerializeField]
+        Text info;
 
-		public MailchimpPlugin mailchimpPlugin;
-		public InputField input;
-		public Text info;
-		MailchimpPlugin.Callback callback;
+        MailchimpPlugin.Callback callback;
 
-		public void SubscribeOnClick() {
-			mailchimpPlugin.SubscribeEmail(input.text, callback2);
-		}
+        public void SubscribeOnClick() {
+            mailchimpPlugin.SubscribeEmail(input.text, callback2);
+        }
 
-		void callback2(bool error) {
-			if(error) {
-				info.text = "Error";
-			} else {
-				info.text = "Done!";
-			} 
-		}
-	}
+        void callback2(bool error, string message) {
+            if (error) {
+                info.text = "Error: " + message;
+            }
+            else {
+                info.text = "Done!";
+            } 
+        }
+    }
 }
